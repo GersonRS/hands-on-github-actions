@@ -1,0 +1,24 @@
+name: Code Quality Check
+
+on: [push, pull_request]
+
+jobs:
+  say_hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Instalar dependências
+        run: pip install flake8 black
+
+      - name: Rodar flake8 (linter)
+        run: flake8 .
+
+      - name: Rodar black (formatação)
+        run: black --check .
