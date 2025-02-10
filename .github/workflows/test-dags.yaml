@@ -1,9 +1,9 @@
-name: Code Quality Check
+name: Test Airflow DAGs
 
 on: [push, pull_request]
 
 jobs:
-  lint:
+  test_dags:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do código
@@ -14,11 +14,8 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Instalar dependências
-        run: pip install flake8 black
+      - name: Instalar Apache Airflow e Pytest
+        run: pip install apache-airflow pytest
 
-      - name: Rodar flake8 (linter)
-        run: flake8 .
-
-      - name: Rodar black (formatação)
-        run: black --check .
+      - name: Rodar testes nas DAGs
+        run: pytest tests/test_dags.py
